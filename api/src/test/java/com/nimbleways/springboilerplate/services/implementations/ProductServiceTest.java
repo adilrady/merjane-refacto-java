@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(SpringExtension.class)
 @UnitTest
-public class MyUnitTests {
+public class ProductServiceTest {
 
     @Mock
     private NotificationService notificationService;
@@ -25,7 +25,7 @@ public class MyUnitTests {
     private ProductService productService;
 
     @Test
-    public void test() {
+    public void shouldSaveProductAndSendDelayNotificationWhenNotifyDelayOfProduct() {
         // GIVEN
         Product product =new Product(null, 15, 0, "NORMAL", "RJ45 Cable", null, null, null);
 
