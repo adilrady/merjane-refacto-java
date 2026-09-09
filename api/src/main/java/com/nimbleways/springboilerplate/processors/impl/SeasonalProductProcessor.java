@@ -4,6 +4,7 @@ import com.nimbleways.springboilerplate.entities.Product;
 import com.nimbleways.springboilerplate.processors.ProductProcessor;
 import com.nimbleways.springboilerplate.repositories.ProductRepository;
 import com.nimbleways.springboilerplate.services.implementations.ProductService;
+import com.nimbleways.springboilerplate.services.implementations.SeasonalProductService;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -12,12 +13,12 @@ import java.time.LocalDate;
 public class SeasonalProductProcessor implements ProductProcessor {
 
     private final ProductRepository productRepository;
-    private final ProductService productService;
+    private final SeasonalProductService seasonalProductService;
 
     public SeasonalProductProcessor(ProductRepository productRepository,
-                                    ProductService productService) {
+                                    SeasonalProductService seasonalProductService) {
         this.productRepository = productRepository;
-        this.productService = productService;
+        this.seasonalProductService = seasonalProductService;
     }
 
     @Override
@@ -35,7 +36,7 @@ public class SeasonalProductProcessor implements ProductProcessor {
             product.setAvailable(product.getAvailable() - 1);
             productRepository.save(product);
         } else {
-            productService.handleSeasonalProduct(product);
+            seasonalProductService.handleSeasonalProduct(product);
         }
     }
 }

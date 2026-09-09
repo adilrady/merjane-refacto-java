@@ -3,6 +3,7 @@ package com.nimbleways.springboilerplate.processors.impl;
 import com.nimbleways.springboilerplate.entities.Product;
 import com.nimbleways.springboilerplate.processors.ProductProcessor;
 import com.nimbleways.springboilerplate.repositories.ProductRepository;
+import com.nimbleways.springboilerplate.services.implementations.ExpirableProductService;
 import com.nimbleways.springboilerplate.services.implementations.ProductService;
 import org.springframework.stereotype.Component;
 
@@ -12,12 +13,12 @@ import java.time.LocalDate;
 public class ExpirableProductProcessor implements ProductProcessor {
 
     private final ProductRepository productRepository;
-    private final ProductService productService;
+    private final ExpirableProductService expirableProductService;
 
     public ExpirableProductProcessor(ProductRepository productRepository,
-                                     ProductService productService) {
+                                     ExpirableProductService expirableProductService) {
         this.productRepository = productRepository;
-        this.productService = productService;
+        this.expirableProductService = expirableProductService;
     }
 
     @Override
@@ -34,7 +35,7 @@ public class ExpirableProductProcessor implements ProductProcessor {
             product.setAvailable(product.getAvailable() - 1);
             productRepository.save(product);
         } else {
-            productService.handleExpiredProduct(product);
+            expirableProductService.handleExpiredProduct(product);
         }
     }
 }

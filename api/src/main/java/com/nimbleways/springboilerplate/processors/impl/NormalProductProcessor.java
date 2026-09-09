@@ -3,6 +3,7 @@ package com.nimbleways.springboilerplate.processors.impl;
 import com.nimbleways.springboilerplate.entities.Product;
 import com.nimbleways.springboilerplate.processors.ProductProcessor;
 import com.nimbleways.springboilerplate.repositories.ProductRepository;
+import com.nimbleways.springboilerplate.services.implementations.NormalProductService;
 import com.nimbleways.springboilerplate.services.implementations.ProductService;
 import org.springframework.stereotype.Component;
 
@@ -10,12 +11,12 @@ import org.springframework.stereotype.Component;
 public class NormalProductProcessor implements ProductProcessor {
 
     private final ProductRepository productRepository;
-    private final ProductService productService;
+    private final NormalProductService normalProductService;
 
     public NormalProductProcessor(ProductRepository productRepository,
-                                  ProductService productService) {
+                                  NormalProductService normalProductService) {
         this.productRepository = productRepository;
-        this.productService = productService;
+        this.normalProductService = normalProductService;
     }
 
     @Override
@@ -29,7 +30,7 @@ public class NormalProductProcessor implements ProductProcessor {
             product.setAvailable(product.getAvailable() - 1);
             productRepository.save(product);
         } else if (product.getLeadTime() > 0) {
-            productService.notifyDelay(product.getLeadTime(), product);
+            normalProductService.notifyDelay(product.getLeadTime(), product);
         }
     }
 }
